@@ -246,6 +246,7 @@ class Youploader:
                 self.total_files += 1
                 fullpath = dirpath + "/" + f
                 relpath = fullpath[len(start_path):]
+                filename = f.split("/")[-1]
                 ext = f.lower().split(".")[-1]
                 if ext in VIDEO_EXTS: 
                   if not str2key(relpath) in self.uploaded_videos:
@@ -258,6 +259,9 @@ class Youploader:
                     video_id = self.uploaded_videos[str2key(relpath)]
                     print "Skipping video " + relpath + ": already uploaded with id = " + str(video_id)
                     self.skipped_videos_count += 1
+
+                  video_link_file = open(os.path.join(dirpath, filename + " - " + str(video_id) + ".txt"), 'w')
+                  video_link_file.write("YouTube link : \nhttps://youtu.be/" + str(video_id))
                 else:
                   print 'Ignored file ' + relpath
                   self.ignored_files.write(fullpath + '\n')
